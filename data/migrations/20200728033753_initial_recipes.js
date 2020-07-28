@@ -6,6 +6,13 @@ exports.up = function (knex) {
       tbl.text('category', 128).notNullable();
       tbl.text('source', 128).notNullable();
       tbl.text('imageURL', 256);
+      tbl
+        .integer('user_id')
+        .unsigned()
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onUpdate('CASCADE');
     })
     .createTable('ingredients', (tbl) => {
       tbl.increments();

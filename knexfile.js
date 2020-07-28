@@ -4,7 +4,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './data/auth.db3', // Rename the db? recipes and users separate?
+      filename: './data/auth.db3',
     },
     useNullAsDefault: true,
     migrations: {
