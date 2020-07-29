@@ -25,7 +25,7 @@ router.post('/register', (req, res) => {
   const credentials = req.body;
 
   if (isValid(credentials)) {
-    const rounds = process.env.BCRYPT_ROUNDS || 8;
+    const rounds = +process.env.BCRYPT_ROUNDS || 8;
 
     const hash = bcryptjs.hashSync(credentials.password, rounds);
 
@@ -75,7 +75,7 @@ router.post('/signup', (req, res) => {
   const credentials = req.body;
 
   if (isValid(credentials)) {
-    const rounds = process.env.BCRYPT_ROUNDS || 8;
+    const rounds = +process.env.BCRYPT_ROUNDS || 8;
 
     const hash = bcryptjs.hashSync(credentials.password, rounds);
 
