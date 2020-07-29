@@ -25,7 +25,7 @@ router.post('/register', (req, res) => {
   const credentials = req.body;
 
   if (isValid(credentials)) {
-    const rounds = process.env.BCRYPT_ROUNDS || 8;
+    const rounds = process.env.BCRYPT_ROUNDS;
 
     const hash = bcryptjs.hashSync(credentials.password, rounds);
 
@@ -75,7 +75,7 @@ router.post('/signup', (req, res) => {
   const credentials = req.body;
 
   if (isValid(credentials)) {
-    const rounds = process.env.BCRYPT_ROUNDS || 8;
+    const rounds = process.env.BCRYPT_ROUNDS;
 
     const hash = bcryptjs.hashSync(credentials.password, rounds);
 
@@ -127,7 +127,7 @@ function makeJwt(user) {
     username: user.username,
   };
 
-  const secret = process.env.JWT_SECRET || 'is it secret, is it safe?'; // put in .env file for best practice
+  const secret = process.env.JWT_SECRET;
 
   const options = {
     expiresIn: '2h',

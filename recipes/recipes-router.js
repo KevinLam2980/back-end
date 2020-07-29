@@ -1,9 +1,10 @@
 const express = require('express');
 const router = require('express').Router();
 const Recipes = require('./recipes-model.js');
-const { restart } = require('nodemon');
 
 router.use(express.json());
+
+const validateId = require('../middleware/validateRecipeById.js');
 
 router.get('/', (req, res) => {
   Recipes.find()
@@ -41,23 +42,20 @@ router.post('/', (req, res) => {
     });
 });
 
-router.delete('/:id', (req, res) => {
-  console.log(req.jwt.subject);
-  // Need to figure out how to compare the user's id to the associated ID on the recipe
-
-  //   Recipes.remove(req.params.id)
-  //     .then((count) => {
-  //       if (count) {
-  //         res.status(204).end();
-  //       } else {
-  //         res
-  //           .status(404)
-  //           .json({ message: 'Could not find a recipe with that id.' });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       res.status(500).json({ message: 'Failed to delete recipe' });
-  //     });
+router.delete('/:id', validateId, (req, res) => {
+  Recipes.remove(req.params.id)
+    .then((count) => {
+      if (count) {
+        res.status(204).json({ message: 'This recipe has been deleted.' });
+      } else {
+        res
+          .status(404)
+          .json({ message: 'Could not find a recipe with that id.' });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed to delete recipe' });
+    });
 });
 
 module.exports = router;
