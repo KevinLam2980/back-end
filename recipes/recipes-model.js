@@ -4,6 +4,7 @@ module.exports = {
   find,
   add,
   findById,
+  update,
   remove,
 };
 
@@ -19,6 +20,15 @@ function add(recipe) {
 
 function findById(id) {
   return db('recipes').where({ id }).first();
+}
+
+function update(changes, id) {
+  return db('recipes')
+    .where({ id })
+    .update(changes)
+    .then(() => {
+      return findById(id);
+    });
 }
 
 function remove(id) {
