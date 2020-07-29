@@ -43,7 +43,7 @@ router.get('/:id/ingredients', (req, res) => {
       res.status(200).json({ data: ingredients });
     })
     .catch((err) =>
-      res.status(500).json({ message: 'unable to retrieve ingredients' })
+      res.status(404).json({ message: 'There is no recipe with that ID.' })
     );
 });
 
@@ -52,10 +52,12 @@ router.get('/:id/instructions', (req, res) => {
   const { id } = req.params;
 
   Instructions.findByRecipe(id)
-    .then((instruction) => {
-      console.log('instruction:', instruction);
+    .then((instructions) => {
+      res.status(200).json({ data: instructions });
     })
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      res.status(404).json({ message: 'There is no recipe with that ID.' })
+    );
 });
 
 // POST - A new recipe
@@ -68,6 +70,26 @@ router.post('/', (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({ message: 'Failed to create a new recipe.' });
+    });
+});
+
+// PUT - Update a recipe by ID
+router.put('/:id', validateId, (req, res) => {
+  const { id } = req.params;
+  const changes = req.body;
+
+  Recipes.findById(id)
+    .then((recipe) => {
+      if (recipe) {
+        Recipes.update(changes, id).then((updatedRecipe) => {
+          res.status(200).json({ data: updatedRecipe });
+        });
+      } else {
+        res.status(404)({ message: 'There is no recipe with that ID.' });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed to update the recipe.' });
     });
 });
 
