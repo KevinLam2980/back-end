@@ -26,7 +26,7 @@ router.post('/register', (req, res) => {
   const credentials = req.body;
 
   if (isValid(credentials)) {
-    const rounds = process.env.BCRYPT_ROUNDS;
+    const rounds = process.env.BCRYPT_ROUNDS || 8;
 
     const hash = bcryptjs.hashSync(credentials.password, rounds);
 
@@ -66,7 +66,7 @@ router.post('/login', (req, res) => {
       });
   } else {
     res.status(400).json({
-      message: 'Please provide ausername and an alphanumeric password.',
+      message: 'Please provide a username and an alphanumeric password.',
     });
   }
 });
@@ -76,7 +76,7 @@ router.post('/signup', (req, res) => {
   const credentials = req.body;
 
   if (isValid(credentials)) {
-    const rounds = process.env.BCRYPT_ROUNDS;
+    const rounds = process.env.BCRYPT_ROUNDS || 8;
 
     const hash = bcryptjs.hashSync(credentials.password, rounds);
 
@@ -116,7 +116,7 @@ router.post('/signin', (req, res) => {
       });
   } else {
     res.status(400).json({
-      message: 'Please provide ausername and an alphanumeric password.',
+      message: 'Please provide a username and an alphanumeric password.',
     });
   }
 });

@@ -42,6 +42,8 @@ imageURL: 'put-a-link-here' // String, not required
 | GET    | /api/recipes     | Get a list of all recipes                                     |
 | GET    | /api/recipes/:id | Get a recipe by id                                            |
 | POST   | /api/recipes     | Add a recipe (name, category, source, imageURL) to the server |
+| PUT    | /api/recipes/:id | Update a recipe by ID (must be the user that uploaded it)     |
+| DELETE | /api/recipes/:id | Delete a recipe by ID (must be the user that uploaded it)     |
 
 ## /api/recipes/:id/ingredients (must be logged in to access these)
 
