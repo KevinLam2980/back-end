@@ -2,6 +2,7 @@ const db = require('../data/connection.js');
 
 module.exports = {
   findByRecipe,
+  add,
 };
 
 function findByRecipe(id) {
@@ -10,4 +11,8 @@ function findByRecipe(id) {
     .select('i.ingredient')
     .where('r.id', id)
     .orderBy('i.id');
+}
+
+function add(ingredient) {
+  return db('ingredients').insert(ingredient);
 }
