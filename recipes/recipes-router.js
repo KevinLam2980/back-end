@@ -79,16 +79,17 @@ router.post('/:id/ingredients', validateId, (req, res) => {
 
   const ingArray = req.body.ingredients;
   console.log(ingArray);
+
   Promise.all(
-    ingArray.map((ingredient) => {
-      Ingredients.add({ ...ingredient, recipe_id: id });
+    ingArray.map(async (ingredient) => {
+      return await Ingredients.add({ ingredient, recipe_id: id });
     })
   )
     .then((ingredients) => {
       res.status(201).json({ data: ingredients });
     })
     .catch((err) => {
-      res.status(500).json({ message: 'Failed to add ingredients.' });
+      res.status(500).json({ message: err });
     });
 });
 
@@ -96,18 +97,19 @@ router.post('/:id/ingredients', validateId, (req, res) => {
 router.post('/:id/instructions', validateId, (req, res) => {
   const { id } = req.params;
 
-  const insArray = req.body.instructions;
-  console.log(insArray);
+  const ingArray = req.body.instructions;
+  console.log(ingArray);
+
   Promise.all(
-    insArray.map((instruction) => {
-      Instructions.add({ ...instruction, recipe_id: id });
+    ingArray.map(async (instruction) => {
+      return await Instructions.add({ instruction, recipe_id: id });
     })
   )
     .then((instructions) => {
       res.status(201).json({ data: instructions });
     })
     .catch((err) => {
-      res.status(500).json({ message: 'Failed to add instructions.' });
+      res.status(500).json({ message: err });
     });
 });
 
@@ -128,6 +130,47 @@ router.put('/:id', validateId, (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({ message: 'Failed to update the recipe.' });
+    });
+});
+
+// PUT - Update an ingredient by ID
+router.put('/:id/ingredients', validateId, (req, res) => {
+  const changes = req.body;
+  id = changes.id;
+
+  Ingredients.findByRecipe(id)
+    .then((ingredient) => {
+      if (ingredient) {
+        Ingredients.update(id, changes).then((updatedIngredient) => {
+          res.status(200).json({ data: updatedIngredient });
+        });
+      } else {
+        res.status(404)({ message: 'There is no ingredient with that ID.' });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed to update the ingredient.' });
+    });
+});
+
+// PUT - Update an instruction by ID
+router.put('/:id/instructions', validateId, (req, res) => {
+  const { id } = req.body.id;
+  const changes = req.body;
+  console.log(changes, id);
+
+  Instructions.findByRecipe(id)
+    .then((instruction) => {
+      if (instruction) {
+        Instructions.update(id, changes).then((updatedInstruction) => {
+          res.status(200).json({ data: updatedInstruction });
+        });
+      } else {
+        res.status(404)({ message: 'There is no instruction with that ID.' });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed to update the instruction.' });
     });
 });
 
