@@ -78,7 +78,7 @@ router.post('/:id/ingredients', validateId, (req, res) => {
   const { id } = req.params;
 
   const ingArray = req.body.ingredients;
-  console.log(insArray);
+  console.log(ingArray);
   Promise.all(
     ingArray.map((ingredient) => {
       Ingredients.add({ ...ingredient, recipe_id: id });
@@ -99,7 +99,7 @@ router.post('/:id/instructions', validateId, (req, res) => {
   const insArray = req.body.instructions;
   console.log(insArray);
   Promise.all(
-    ingArray.map((instruction) => {
+    insArray.map((instruction) => {
       Instructions.add({ ...instruction, recipe_id: id });
     })
   )
