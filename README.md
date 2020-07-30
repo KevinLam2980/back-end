@@ -47,7 +47,7 @@ imageURL: 'put-a-link-here' // String, not required
 
 ## /api/recipes/:id/ingredients (must be logged in to access these)
 
-Schema:
+Schema to GET:
 
 ```js
 {
@@ -57,13 +57,37 @@ recipe_id: 5 // generated on the back end, do not need to include with request
 }
 ```
 
-| Method | URL                          | Description                                           |
-| ------ | ---------------------------- | ----------------------------------------------------- |
-| GET    | /api/recipes/:id/ingredients | Get a list of all ingredients for the provided recipe |
+Schema to POST:
+
+```js
+{
+  ingredients: [
+    '2 cloves garlic, crushed',
+    '2 (6 ounce) cans tomato paste',
+    '16 ounces ricotta cheese',
+  ]; // Array, required
+}
+```
+
+Schema to PUT:
+
+```js
+{
+  id: 10, // ID of ingredient to update, from state
+  ingredient: '1 pound sweet italian sausage', // String, required (the updated info)
+  ];
+}
+```
+
+| Method | URL                          | Description                                                                        |
+| ------ | ---------------------------- | ---------------------------------------------------------------------------------- |
+| GET    | /api/recipes/:id/ingredients | Get a list of all ingredients for the provided recipe                              |
+| POST   | /api/recipes/:id/ingredients | Add an array of ingredients to a recipe by ID (must the the user that uploaded it) |
+| PUT    | /api/recipes/:id/ingredients | Submit a single ingredient to update the information for (along with its id)       |
 
 ## /api/recipes/:id/instructions (must be logged in to access these)
 
-Schema:
+Schema to GET:
 
 ```js
 {
@@ -73,6 +97,29 @@ recipe_id: 5 // generated on the back end, do not need to include with request
 }
 ```
 
-| Method | URL                           | Description                                            |
-| ------ | ----------------------------- | ------------------------------------------------------ |
-| GET    | /api/recipes/:id/instructions | Get a list of all instructions for the provided recipe |
+Schema to POST:
+
+```js
+{
+  instructions: [
+    'Bring a large pot of lightly salted water to a boil',
+    'Preheat oven to 375 degrees F (190 degrees C)',
+  ]; // Array, required
+}
+```
+
+Schema to PUT:
+
+```js
+{
+  id: 10, // ID of instruction to update, from state
+  instruction: 'Keep covered, stirring occasionally', // String, required (the updated info)
+  ];
+}
+```
+
+| Method | URL                           | Description                                                                         |
+| ------ | ----------------------------- | ----------------------------------------------------------------------------------- |
+| GET    | /api/recipes/:id/instructions | Get a list of all instructions for the provided recipe                              |
+| POST   | /api/recipes/:id/instructions | Add an array of instructions to a recipe by ID (must the the user that uploaded it) |
+| PUT    | /api/recipes/:id/instructions | Submit a single instruction to update the information for (along with its id)       |
