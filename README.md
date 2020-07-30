@@ -75,7 +75,6 @@ Schema to PUT:
 {
   id: 10, // ID of ingredient to update, from state
   ingredient: '1 pound sweet italian sausage', // String, required (the updated info)
-  ];
 }
 ```
 
@@ -114,7 +113,6 @@ Schema to PUT:
 {
   id: 10, // ID of instruction to update, from state
   instruction: 'Keep covered, stirring occasionally', // String, required (the updated info)
-  ];
 }
 ```
 
