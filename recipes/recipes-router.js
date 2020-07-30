@@ -78,7 +78,7 @@ router.post('/:id/ingredients', validateId, (req, res) => {
   const { id } = req.params;
   const ingArray = req.body.ingredients;
   ingArray
-    .map((ingredient) => {
+    .forEach((ingredient) => {
       Ingredients.add({ ...ingredient, recipe_id: id });
     })
     .then((ingredients) => {
