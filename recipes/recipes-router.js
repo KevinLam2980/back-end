@@ -73,6 +73,38 @@ router.post('/', (req, res) => {
     });
 });
 
+// POST - Ingredients to a recipe by ID
+router.post('/:id/ingredients', validateId, (req, res) => {
+  const { id } = req.params;
+  const ingArray = req.body.ingredients;
+  ingArray
+    .map((ingredient) => {
+      Ingredients.add({ ...ingredient, recipe_id: id });
+    })
+    .then((ingredients) => {
+      res.status(201).json({ data: ingredients });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed to add ingredients.' });
+    });
+});
+
+// POST - Instructions to a recipe by ID
+router.post('/:id/instructions', validateId, (req, res) => {
+  const { id } = req.params;
+  const insArray = req.body.instructions;
+  insArray
+    .map((instruction) => {
+      Instructions.add({ ...instruction, recipe_id: id });
+    })
+    .then((instructions) => {
+      res.status(201).json({ data: instructions });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed to add instructions.' });
+    });
+});
+
 // PUT - Update a recipe by ID
 router.put('/:id', validateId, (req, res) => {
   const { id } = req.params;

@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     } else {
       res
         .status(401)
-        .json({ message: 'You do not have permission to delete this recipe.' });
+        .json({ message: 'You do not have permission to modify this recipe.' });
     }
   });
 };
