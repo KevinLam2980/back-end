@@ -1,18 +1,38 @@
 const server = require('./server.js');
 const supertest = require('supertest');
 
+// it.todo('filler test');
+
 describe('environment', () => {
-  it.todo('should be using the testing database');
+  it('should be using the testing database', () => {
+    expect(process.env.DB_ENV).toBe('testing');
+  });
 });
 
 describe('server', function () {
-  it.todo('runs the tests');
+  it('runs the tests', () => {
+    expect(true).toBe(true);
+  });
 
   describe('GET /', () => {
-    it.todo('should respond with 200 OK');
+    it('should respond with 200 OK', async () => {
+      await supertest(server).get('/').expect(200);
+    });
 
-    it.todo('should respond with JSON');
+    it('should respond with JSON', async () => {
+      await supertest(server)
+        .get('/')
+        .then((res) => {
+          expect(res.type).toMatch(/json/i);
+        });
+    });
 
-    it.todo(`should respond with api: "it's working, it's working"`);
+    it(`should respond with api: "it's working, it's working!"`, async () => {
+      await supertest(server)
+        .get('/')
+        .then((res) => {
+          expect(res.body.api).toBe(`it's working, it's working!`);
+        });
+    });
   });
 });

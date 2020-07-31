@@ -98,7 +98,6 @@ router.post('/:id/instructions', validateId, (req, res) => {
   const { id } = req.params;
 
   const ingArray = req.body.instructions;
-  console.log(ingArray);
 
   Promise.all(
     ingArray.map(async (instruction) => {
